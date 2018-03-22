@@ -13,5 +13,7 @@ elif [[ ${ATTR} == 'id' ]]; then
    res=`echo "${output}"|grep -e "^Volume ID:"|awk -F: '{print $2}'|awk '{$1=$1};1'`
 elif [[ ${ATTR} == 'type' ]]; then
    res=`echo "${output}"|grep -e "^Type:"|awk -F: '{print $2}'|awk '{$1=$1};1'`
+elif [[ ${ATTR} == 'transport' ]]; then
+   res=`echo "${output}"|grep -e "^Transport-type:"|awk -F: '{print $2}'|awk '{$1=$1};1'`
 fi
 echo "${res:-0}"
