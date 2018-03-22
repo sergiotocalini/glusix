@@ -1,6 +1,6 @@
 #!/usr/bin/env ksh
 
-GLUSTER=`which gluster`
+GLUSTER="sudo `which gluster`"
 
 for vol in `${GLUSTER} volume list 2>/dev/null`; do
    output=""

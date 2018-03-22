@@ -1,6 +1,6 @@
 #!/usr/bin/env ksh
 
-GLUSTER=`which gluster`
+GLUSTER="sudo `which gluster`"
 VOLNAME="${1}"
 ATTR="${2:-bricks}"
 PARAM1="${3}"

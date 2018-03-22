@@ -1,6 +1,6 @@
 #!/usr/bin/env ksh
 
-GLUSTER=`which gluster`
+GLUSTER="sudo `which gluster`"
 
 ${GLUSTER} pool list 2>/dev/null|egrep -v "(^UUID|^$)" | while read line; do
    id=`echo ${line}|awk '{print $1}'|awk '{$1=$1};1'`

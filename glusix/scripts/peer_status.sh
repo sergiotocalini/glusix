@@ -1,6 +1,6 @@
 #!/usr/bin/env ksh
 
-GLUSTER=`which gluster`
+GLUSTER="sudo `which gluster`"
 PEERNAME="${1:-all}"
 ATTR="${2}"
 PARAM1="${3}"
