@@ -10,10 +10,10 @@ if [[ ${PEERNAME} == 'all' ]]; then
     output=`${GLUSTER} peer status 2>/dev/null`
     all=`echo "${output}" | grep -e "^State:" | wc -l`
     sum=`echo "${output}" | grep -e "^State:" | grep "(Connected)" | wc -l`
-    if [[ ${ATTR} == 'peers' ]]; then
+    if [[ ${ATTR:-peers} == 'peers' ]]; then
 	res=`echo "${output}" | grep -e "^Number of Peers:" | awk -F: '{print $2}'|awk '{$1=$1};1'`
     elif [[ ${ATTR} == 'quorum' ]]; then
-	res=`echo $(( (${sum}+1*100) / ${all}+1 ))`
+	res=`echo $(( (((${sum}+1)*100)/(${all}+1)) ))`
     elif [[ ${ATTR} == 'online' ]]; then
 	res=`echo $(( ${sum}+1 ))`
     elif [[ ${ATTR} == 'total' ]]; then
