@@ -44,8 +44,8 @@ elif [[ ${ATTR} == 'clients' ]]; then
 	res=`echo $(( ${sum:-0} / ${all} ))`
     elif [[ ${PARAM1} == "hosts" ]]; then
 	raw=`echo "${output}"|grep -o '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}'`
-	raw=`echo ${raw}|awk -F: '{print $1}'|awk '{$1=$1};1'`
-	res=`echo ${raw}|sort|uniq|wc -l`
+	raw=`echo "${raw}"|awk -F: '{print $1}'|awk '{$1=$1};1'`
+	res=`echo "${raw}"|sort|uniq|wc -l`
     fi
 fi
 echo "${res:-0}"
