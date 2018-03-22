@@ -38,9 +38,9 @@ if [[ ${ATTR} =~ (bricks|inode|size) ]]; then
 elif [[ ${ATTR} == 'clients' ]]; then
     output=`${GLUSTER} volume status ${VOLNAME} clients 2>/dev/null`
     if [[ ${PARAM1:-connected} == "connected" ]]; then
-	raw=`echo "${output}" | grep -e "^Clients connected : " | awk '{print $2}' | awk '{$1=$1};1'`
-	all=`echo "${raw:-0}" | wc -l`
-	sum=`echo "${raw:-0}" | paste -sd+ - | bc`
+	raw=`echo "${output}"|grep -e "^Clients connected : "|awk -F: '{print $2}'|awk '{$1=$1};1'`
+	all=`echo "${raw:-0}"|wc -l`
+	sum=`echo "${raw:-0}"|paste -sd+ -|bc`
 	res=`echo $(( ${sum:-0} / ${all} ))`
     fi
 fi
