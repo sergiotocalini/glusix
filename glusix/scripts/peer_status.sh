@@ -25,7 +25,7 @@ else
     if [[ ${ATTR} == 'state' ]]; then
 	res=`echo "${match}"|awk '{print $3}'`
     elif [[ ${ATTR} == 'id' ]]; then
-	res=`echo "${match}"|awk '{print $2}'`
+	res=`echo "${match}"|awk '{print $1}'`
     fi
 	
 fi
