@@ -18,7 +18,7 @@ if [[ ${ATTR} =~ (bricks|inode|size) ]]; then
 	elif [[ ${PARAM1} == 'total' ]]; then
 	    res=${all}
 	fi
-    elif [[ ${ATTR} == 'inode' ]]; then
+    elif [[ ${ATTR} == 'inodes' ]]; then
 	if [[ ${PARAM1:-total} == 'total' ]]; then
 	    res=`echo "${output}" | grep -e "^Inode Count" | \
            awk -F: '{print $2}'|awk '{$1=$1};1'|sort -n|head -1`
