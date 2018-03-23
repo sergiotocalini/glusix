@@ -6,6 +6,15 @@ ATTR="${2:-bricks}"
 PARAM1="${3}"
 PARAM2="${4}"
 
+function display_units() {
+    value="${1:-1}"
+    units="${2:-B}"
+    type="${3:-dec}"
+    
+    available
+    
+}
+
 if [[ ${ATTR} =~ (bricks|inode|size) ]]; then
     output=`${GLUSTER} volume status ${VOLNAME} detail 2>/dev/null`
     if [[ ${ATTR} == 'bricks' ]]; then
@@ -34,6 +43,23 @@ if [[ ${ATTR} =~ (bricks|inode|size) ]]; then
         	     awk -F: '{print $2}'|awk '{$1=$1};1'|sort -n|head -1`
 	    fi
 	fi
+    elif [[ ${ATTR} == 'size' ]]; then
+	if [[ ${PARAM1:-total} == 'total' ]]; then
+	    raw=`echo "${output}" | grep -e "^Total Disk Space" | \
+	         awk -F: '{print $2}'|awk '{$1=$1};1'|sort -n|head -1`
+	elif [[ ${PARAM1} == 'free' ]]; then
+	    if [[ ${PARAM2} == 'perc' ]]; then
+		total=`echo "${output}" | grep -e "^Total Disk Space" | \
+		       awk -F: '{print $2}'|awk '{$1=$1};1'|sort -n|head -1`
+		free=`echo "${output}" | grep -e "^Disk Space Free" | \
+               	      awk -F: '{print $2}'|awk '{$1=$1};1'|sort -n|head -1`
+		raw=`echo $(( ($( display_units ${free} )*100) / $( display_units "${total}" )) ))`
+	    else
+		raw=`echo "${output}" | grep -e "^Disk Space Free" | \
+                     awk -F: '{print $2}'|awk '{$1=$1};1'|sort -n|head -1`
+	    fi
+	fi
+	res=$( display_units "${raw}" )
     fi
 elif [[ ${ATTR} == 'clients' ]]; then
     output=`${GLUSTER} volume status ${VOLNAME} clients 2>/dev/null`
