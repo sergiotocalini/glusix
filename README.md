@@ -17,4 +17,4 @@ Zabbix Agent - Gluster
     #~ sudo ./glusix/deploy_zabbix.sh
     #~ sudo systemctl restart zabbix-agent
     
-> Note: the installation has to be executed on the zabbix agent host and you have to import the template on the zabbix web.
+*Note: the installation has to be executed on the zabbix agent host and you have to import the template on the zabbix web.*
