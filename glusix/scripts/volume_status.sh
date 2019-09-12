@@ -44,34 +44,34 @@ if [[ ${ATTR} =~ (bricks|inode|size) ]]; then
         fi
     elif [[ ${ATTR} == 'inodes' ]]; then
         if [[ ${PARAM1:-total} == 'total' ]]; then
-            res=`echo "${output}" | grep -e "^Inode Count" | \
-                 awk -F: '{print $2}'|awk '{$1=$1};1'|sort -n|head -1`
+            res=`echo "${output}" | grep -e "^Inode Count" | sed '1!d' | \
+                 awk -F: '{print $2}' | awk '{$1=$1};1'`
         elif [[ ${PARAM1} == 'free' ]]; then
             if [[ ${PARAM2} == 'perc' ]]; then
-                total=`echo "${output}" | grep -e "^Inode Count" | \
-                       awk -F: '{print $2}'|awk '{$1=$1};1'|sort -n|head -1`
-                free=`echo "${output}" | grep -e "^Free Inodes" | \
-                      awk -F: '{print $2}'|awk '{$1=$1};1'|sort -n|head -1`
+                total=`echo "${output}" | grep -e "^Inode Count" | sed '1!d' | \
+                       awk -F: '{print $2}' | awk '{$1=$1};1'`
+                free=`echo "${output}" | grep -e "^Free Inodes" | sed '1!d' | \
+                      awk -F: '{print $2}' | awk '{$1=$1};1'`
                 res=`echo $(( (${free}*100) / ${total}))`
             else
-                res=`echo "${output}" | grep -e "^Free Inodes" | \
-                     awk -F: '{print $2}'|awk '{$1=$1};1'|sort -n|head -1`
+                res=`echo "${output}" | grep -e "^Free Inodes" | sed '1!d' | \
+                     awk -F: '{print $2}' | awk '{$1=$1};1'`
             fi
         fi
     elif [[ ${ATTR} == 'size' ]]; then
         if [[ ${PARAM1:-total} == 'total' ]]; then
-            raw=`echo "${output}" | grep -e "^Total Disk Space" | \
-                 awk -F: '{print $2}'|awk '{$1=$1};1'|sort -n|head -1`
+            raw=`echo "${output}" | grep -e "^Total Disk Space" | sed '1!d' | \
+                 awk -F: '{print $2}' | awk '{$1=$1};1'`
         elif [[ ${PARAM1} == 'free' ]]; then
             if [[ ${PARAM2} == 'perc' ]]; then
-                total=`echo "${output}" | grep -e "^Total Disk Space" | \
-                       awk -F: '{print $2}'|awk '{$1=$1};1'|sort -n|head -1`
-                free=`echo "${output}" | grep -e "^Disk Space Free" | \
-                      awk -F: '{print $2}'|awk '{$1=$1};1'|sort -n|head -1`
+                total=`echo "${output}" | grep -e "^Total Disk Space" | sed '1!d' | \
+                       awk -F: '{print $2}' | awk '{$1=$1};1'`
+                free=`echo "${output}" | grep -e "^Disk Space Free" | sed '1!d' | \
+                      awk -F: '{print $2}' | awk '{$1=$1};1'`
                 raw=`echo "scale=2;($(display_units ${free})*100)/$(display_units "${total}")"|bc`
             else
-                raw=`echo "${output}" | grep -e "^Disk Space Free" | \
-                     awk -F: '{print $2}'|awk '{$1=$1};1'|sort -n|head -1`
+                raw=`echo "${output}" | grep -e "^Disk Space Free" | sed '1!d' | \
+                     awk -F: '{print $2}' | awk '{$1=$1};1'`
             fi
         fi
         res=$( display_units "${raw}" )
