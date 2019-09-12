@@ -5,15 +5,16 @@ Zabbix Agent - Gluster
 ## Packages
 * ksh
 * bc
+* awk
 
 ### Debian/Ubuntu
 ```bash
-~# sudo apt install ksh bc
+~# sudo apt install ksh bc awk
 ~#
 ```
 ### Red Hat
 ```bash
-~# sudo yum install ksh
+~# sudo yum install ksh bc awk
 ~#
 ```
 # Deploy
